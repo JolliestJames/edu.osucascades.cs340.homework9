@@ -1,8 +1,10 @@
 package com.bignerdranch.android.criminalintent;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 import com.bignerdranch.android.criminalintent.database.database.database.CrimeBaseHelper;
 
 import java.util.ArrayList;
@@ -40,5 +42,15 @@ public class CrimeLab {
 
     public Crime getCrime(UUID id) {
         return null;
+    }
+
+    private static ContentValues getContentValues(Crime crime) {
+        ContentValues values = new ContentValues();
+        values.put(CrimeTable.Columns.UUID, crime.getId().toString());
+        values.put(CrimeTable.Columns.TITLE, crime.getTitle());
+        values.put(CrimeTable.Columns.DATE, crime.getDate().getTime());
+        values.put(CrimeTable.Columns.SOLVED, crime.isSolved() ? 1 : 0);
+
+        return values;
     }
 }
