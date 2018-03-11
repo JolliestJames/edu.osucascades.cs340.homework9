@@ -1,7 +1,9 @@
 #Directories
 /androidTest
 /test
-/.DS_Store
+
+#DS_Store
+*.DS_Store
 
 # Built application files
 *.apk
