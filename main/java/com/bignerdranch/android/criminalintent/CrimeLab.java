@@ -3,8 +3,10 @@ package com.bignerdranch.android.criminalintent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.bignerdranch.android.criminalintent.database.CrimeCursorWrapper;
 import com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
 
@@ -55,7 +57,7 @@ public class CrimeLab {
                 new String[] { uuidString });
     }
 
-    private Cursor queryCrimes(String whereClause, String[] whereArgs) {
+    private CursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 CrimeTable.NAME,
                 null,
@@ -66,7 +68,7 @@ public class CrimeLab {
                 null
         );
 
-        return cursor;
+        return new CrimeCursorWrapper(cursor);
     }
 
     private static ContentValues getContentValues(Crime crime) {
