@@ -28,8 +28,10 @@ public class CrimeFragment extends Fragment {
     private static final int REQUEST_DATE = 0;
 
     private Crime mCrime;
+    private CrimeLab sCrimeLab;
     private EditText mTitleField;
     private Button mDateButton;
+    private Button mDelete;
     private CheckBox mSolvedCheckbox;
 
     public static CrimeFragment newInstance(UUID crimeId) {
@@ -46,6 +48,7 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        sCrimeLab = CrimeLab.get(getActivity());
     }
 
     @Override
@@ -99,6 +102,15 @@ public class CrimeFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, 
                     boolean isChecked) {
                 mCrime.setSolved(isChecked);
+            }
+        });
+
+        mDelete = (Button) v.findViewById(R.id.delete_crime);
+        mDelete.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sCrimeLab.deleteCrime(mCrime);
+                getActivity().finish();
             }
         });
 
